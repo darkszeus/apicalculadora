@@ -48,3 +48,8 @@ Thumbs.db
 *.mov
 *.wmv
 
+# DB files
+db.sqlite3
+sercrets.json
+my.cnf
+
