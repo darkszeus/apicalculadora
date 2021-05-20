@@ -89,7 +89,7 @@ class AzureApiViewSet(viewsets.ReadOnlyModelViewSet):
 
         return Response(serializer.data)
 
-    # CPU BUSCAR
+    # asessment basado en cpu, ram, location
     @action(detail=False, methods=['get'], url_path='get_assesment/(?P<location>[^/.]+)/(?P<cpu>[^/.]+)/(?P<ram>[^/.]+)')
     def get_assesment(self, request, location, cpu, ram):
         prices = RetailPrices.objects.all().order_by(
