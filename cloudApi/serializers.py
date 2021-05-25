@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from django.db.models import fields
-from cloudApi.models import RetailPrices
+from cloudApi.models import AzurePrices, AmazonPrices
 from rest_framework import serializers
 
 
@@ -17,5 +17,10 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 class AzureApiSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = RetailPrices
+        model = AzurePrices
+        fields = '__all__'
+
+class AmazonApiSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = AmazonPrices
         fields = '__all__'
