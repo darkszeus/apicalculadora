@@ -154,12 +154,24 @@ class AmazonApiViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = self.get_serializer(prices, many=True)
         return Response(serializer.data)
 
-    # Error .
-    @action(detail=False, methods=['get'], url_path='get_prices_instancetype/(?P<instancetype>[^/.]+)')
+    @action(detail=False, methods=['get'], url_path='get_prices_instancetype/(?P<instancetype>[\w.]+)')
     def get_prices_instancetype(self, request, instancetype):
-        print(instancetype)
         prices = AmazonPrices.objects.all().order_by(
             'skuid').filter(instancetype__contains=instancetype)
+
+        page = self.paginate_queryset(prices)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+            
+        serializer = self.get_serializer(prices, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path='get_assesment/(?P<location>[^/.]+)/(?P<cpu>[^/.]+)')
+    def get_assesment(self, request, location, cpu):
+        prices = AmazonPrices.objects.all().order_by(
+            'skuid').filter(vcpu__lte=cpu, vcpu__gt=0, location__exact=location)
 
         page = self.paginate_queryset(prices)
 
