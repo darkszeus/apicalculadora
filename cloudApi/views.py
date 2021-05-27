@@ -140,7 +140,7 @@ class AmazonApiViewSet(viewsets.ReadOnlyModelViewSet):
 
         return Response(os)
 
-    @action(detail=False, methods=['get'], url_path='get_prices_locations/(?P<location>[^/.]+)')
+    @action(detail=False, methods=['get'], url_path='get_prices_locations/(?P<location>[^/]+)')
     def get_prices_locations(self, request, location):
         prices = AmazonPrices.objects.all().order_by(
             'skuid').filter(location__contains=location)
@@ -154,7 +154,7 @@ class AmazonApiViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = self.get_serializer(prices, many=True)
         return Response(serializer.data)
 
-    @action(detail=False, methods=['get'], url_path='get_prices_instancetype/(?P<instancetype>[\w.]+)')
+    @action(detail=False, methods=['get'], url_path='get_prices_instancetype/(?P<instancetype>[^/]+)')
     def get_prices_instancetype(self, request, instancetype):
         prices = AmazonPrices.objects.all().order_by(
             'skuid').filter(instancetype__contains=instancetype)
@@ -168,10 +168,10 @@ class AmazonApiViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = self.get_serializer(prices, many=True)
         return Response(serializer.data)
 
-    @action(detail=False, methods=['get'], url_path='get_assesment/(?P<location>[^/.]+)/(?P<cpu>[^/.]+)')
-    def get_assesment(self, request, location, cpu):
+    @action(detail=False, methods=['get'], url_path='get_assesment/(?P<location>[^/]+)/(?P<os>[^/.]+)/(?P<cpu>[^/.]+)/(?P<ram>[^/.]+)')
+    def get_assesment(self, request, location, os, cpu, ram):
         prices = AmazonPrices.objects.all().order_by(
-            'skuid').filter(vcpu__lte=cpu, vcpu__gt=0, location__exact=location)
+            'skuid').filter(vcpu__lte=cpu, vcpu__gt=0, memory__lte=ram,location__exact=location, operatingsystem__exact=os)
 
         page = self.paginate_queryset(prices)
 

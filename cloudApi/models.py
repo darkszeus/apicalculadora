@@ -51,14 +51,14 @@ class AmazonPrices(models.Model):
     servicename = models.CharField(max_length=100, blank=True, null=True)
     operatingsystem = models.CharField(db_column='operatingSystem', max_length=100, blank=True, null=True)  # Field name made lowercase.
     instancefamily = models.CharField(db_column='instanceFamily', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    instancetype = models.CharField(db_column='instanceType', max_length=100, blank=True, null=True)
+    instancetype = models.CharField(db_column='instanceType', max_length=100, blank=True, null=True)  # Field name made lowercase.
     tenancy = models.CharField(max_length=100, blank=True, null=True)
     licensemodel = models.CharField(db_column='licenseModel', max_length=100, blank=True, null=True)  # Field name made lowercase.
     currentgeneration = models.CharField(db_column='currentGeneration', max_length=100, blank=True, null=True)  # Field name made lowercase.
     vcpu = models.IntegerField(blank=True, null=True)
     clockspeed = models.CharField(db_column='clockSpeed', max_length=100, blank=True, null=True)  # Field name made lowercase.
     processorarchitecture = models.CharField(db_column='processorArchitecture', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    memory = models.CharField(max_length=100, blank=True, null=True)
+    memory = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     enhancednetworkingsupported = models.CharField(db_column='enhancedNetworkingSupported', max_length=100, blank=True, null=True)  # Field name made lowercase.
     networkperformance = models.CharField(db_column='networkPerformance', max_length=100, blank=True, null=True)  # Field name made lowercase.
     dedicatedebsthroughput = models.CharField(db_column='dedicatedEbsThroughput', max_length=100, blank=True, null=True)  # Field name made lowercase.
